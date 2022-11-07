@@ -3,7 +3,7 @@ package com.vishal2376.quoteapp.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vishal2376.quoteapp.QuoteRepository
+import com.vishal2376.quoteapp.repository.QuoteRepository
 import com.vishal2376.quoteapp.models.QuoteList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

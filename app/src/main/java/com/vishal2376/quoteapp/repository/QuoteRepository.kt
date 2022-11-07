@@ -1,4 +1,4 @@
-package com.vishal2376.quoteapp
+package com.vishal2376.quoteapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
