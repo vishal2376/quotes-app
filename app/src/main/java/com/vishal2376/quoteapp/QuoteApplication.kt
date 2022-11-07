@@ -3,10 +3,9 @@ package com.vishal2376.quoteapp
 import android.app.Application
 import com.vishal2376.quoteapp.api.QuoteService
 import com.vishal2376.quoteapp.api.RetrofitHelper
-import com.vishal2376.quoteapp.models.QuoteList
 import com.vishal2376.quoteapp.repository.QuoteRepository
 
-class QuoteApplication:Application() {
+class QuoteApplication : Application() {
 
     lateinit var repository: QuoteRepository
 
