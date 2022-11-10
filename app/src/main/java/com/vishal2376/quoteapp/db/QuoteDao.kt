@@ -8,7 +8,7 @@ import com.vishal2376.quoteapp.models.Result
 @Dao
 interface QuoteDao {
     @Insert
-    suspend fun addQuote(quote: Result)
+    suspend fun addQuote(quote: List<Result>)
 
     @Query("SELECT * FROM quote")
     suspend fun getQuotes(): List<Result>
