@@ -1,6 +1,8 @@
 package com.vishal2376.quoteapp.repository
 
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.vishal2376.quoteapp.api.QuoteService
@@ -23,13 +25,14 @@ class QuoteRepository(
             val result = quoteService.getQuotes(page)
             if (result.body() != null) {
                 quoteDatabase.quoteDao().addQuote(result.body()!!.results)
-                quoteLiveData.postValue(result.body())
+//                quoteLiveData.postValue(result.body())
             }
-        }else{
-            val quotes = quoteDatabase.quoteDao().getQuotes()
-            val quotesList = QuoteList(1,1,1,quotes,1,1)
-            quoteLiveData.postValue(quotesList)
         }
+
+        val quotes = quoteDatabase.quoteDao().getQuotes()
+        val quotesList = QuoteList(1, 1, 1, quotes, 1, 1)
+        quoteLiveData.postValue(quotesList)
+        Log.e("@@@@", quotes.size.toString())
 
     }
 
