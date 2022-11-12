@@ -1,13 +1,13 @@
 package com.vishal2376.quoteapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vishal2376.quoteapp.adapters.QuoteAdapter
-import com.vishal2376.quoteapp.models.QuoteList
+import com.vishal2376.quoteapp.repository.Response
 import com.vishal2376.quoteapp.viewmodels.QuoteViewModel
 import com.vishal2376.quoteapp.viewmodels.QuoteViewModelFactory
 
@@ -26,8 +26,20 @@ class MainActivity : AppCompatActivity() {
 
         quoteViewModel = ViewModelProvider(this,QuoteViewModelFactory(repository))[QuoteViewModel::class.java]
 
-        quoteViewModel.quotes.observe(this){
-            adapter.submitList(it.results)
+        quoteViewModel.quotes.observe(this) { quoteResponse ->
+            when (quoteResponse) {
+                is Response.Success -> {
+                    quoteResponse.data?.let {
+                        adapter.submitList(it.results)
+                    }
+                }
+                is Response.Error -> {
+                    Toast.makeText(this,"Error",Toast.LENGTH_LONG).show()
+                }
+                is Response.Loading -> {
+                    Toast.makeText(this,"Loading",Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
