@@ -34,7 +34,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 is Response.Error -> {
-                    Toast.makeText(this,"Error",Toast.LENGTH_LONG).show()
+                    quoteResponse.errorMessage.let {
+                        Toast.makeText(this,it, Toast.LENGTH_LONG).show()
+                    }
                 }
                 is Response.Loading -> {
                     Toast.makeText(this,"Loading",Toast.LENGTH_LONG).show()

@@ -18,25 +18,24 @@ class QuoteRepository(
     private val quoteLiveData = MutableLiveData<Response<QuoteList>>()
 
     val quotes: LiveData<Response<QuoteList>> get() = quoteLiveData
-
     suspend fun getQuotes(page: Int) {
+
         if (NetworkUtils.isOnline(context)) {
             val result = quoteService.getQuotes(page)
             if (result.body() != null) {
                 quoteDatabase.quoteDao().addQuote(result.body()!!.results)
-//                quoteLiveData.postValue(result.body())
+//                quoteLiveData.postValue(Response.Success(result.body()))
+            }
+
+            try {
+                val quotes = quoteDatabase.quoteDao().getQuotes()
+                val quotesList = QuoteList(1, 1, 1, quotes, 1, 1)
+                quoteLiveData.postValue(Response.Success(quotesList))
+                Log.e("@@@@", quotes.size.toString())
+            } catch (e: Exception) {
+                quoteLiveData.postValue(Response.Error("Store Error"))
             }
         }
-
-        try{
-            val quotes = quoteDatabase.quoteDao().getQuotes()
-            val quotesList = QuoteList(1, 1, 1, quotes, 1, 1)
-            quoteLiveData.postValue(Response.Success(quotesList))
-            Log.e("@@@@", quotes.size.toString())
-        }catch (e:Exception){
-           quoteLiveData.postValue(Response.Error("Store Error"))
-        }
-
     }
 
 
