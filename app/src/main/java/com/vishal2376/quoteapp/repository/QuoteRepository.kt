@@ -2,7 +2,6 @@ package com.vishal2376.quoteapp.repository
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.vishal2376.quoteapp.api.QuoteService
@@ -34,6 +33,16 @@ class QuoteRepository(
         quoteLiveData.postValue(quotesList)
         Log.e("@@@@", quotes.size.toString())
 
+    }
+
+
+    suspend fun getQuoteBackground() {
+        val randomNumber = (Math.random() * 10).toInt()
+
+        val result = quoteService.getQuotes(randomNumber)
+        if (result.body() != null) {
+            quoteDatabase.quoteDao().addQuote(result.body()!!.results)
+        }
     }
 
 }
